@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.cms.security.user.mapper.UserMapper">
+
+    <select id="findUserInfo" resultType="com.jack.cms.security.user.model.User">
+        SELECT
+          a.USER_ID AS userId,
+          a.USER_REL_NAME AS userRelName,
+          a.USER_STATUS AS userStatus,
+          a.USER_PASSWORD AS userPassword,
+          a.REMARK AS remark,
+          a.DELETE_FLAG AS deleteFlag,
+          a.EMAIL AS email,
+          a.MOBILE_NUM AS mobileNum
+          FROM  USER a
+    </select>
+</mapper>
