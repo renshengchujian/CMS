@@ -55,7 +55,7 @@ import javax.sql.DataSource;
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactoryBean() {
