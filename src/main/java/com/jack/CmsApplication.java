@@ -20,6 +20,6 @@ public class CmsApplication extends WebMvcConfigurerAdapter {
     @RequestMapping("/")
     String home(ModelMap modelMap) {
         modelMap.put("name", "jack11");
-        return "index";
+        return "layout/login";
     }
 }
