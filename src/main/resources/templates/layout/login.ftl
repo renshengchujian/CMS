@@ -1,24 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8"/>
     <title>CMS 登录</title>
     <link rel="stylesheet" href="static/css/index.css"/>
+    <link rel="stylesheet" href="static/css/style.css"/>
     <style type="text/css">
-        body {
-            margin: 0px;
-            padding: 0px;
-            background: #1F2D3D;
-            font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
-            font-weight: 400;
-            -webkit-font-smoothing: antialiased;
-        }
-        #app {
-            position: absolute;
-            top: 0px;
-            bottom: 0px;
-            width: 100%;
-        }
         .card-box {
             padding: 20px;
             /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
@@ -45,16 +33,17 @@
         }
     </style>
 </head>
+
 <body>
 <div id="app">
-    <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left"
+    <el-form :model="loginForm" :rules="rules2" ref="loginForm" label-position="left"
              label-width="0px" class="demo-ruleForm card-box loginform">
         <h3 class="title">系统登录</h3>
-        <el-form-item>
+        <el-form-item prop="username">
             <el-input type="text" v-model="loginForm.username" auto-complete="off"
                       placeholder="账号"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="password">
             <el-input type="password" v-model="loginForm.password" auto-complete="off"
                       placeholder="密码"></el-input>
         </el-form-item>
@@ -65,11 +54,8 @@
         </el-form-item>
     </el-form>
 </div>
-
 </body>
-<!-- 先引入 Vue -->
 <script src="static/js/vue.min.js"></script>
-<!-- 引入组件库 -->
 <script src="static/js/index.js"></script>
 <script>
     new Vue({
@@ -80,26 +66,40 @@
                     username: '',
                     password: ''
                 },
-                rules: {
-                    username: [
-                        {required: true, message: '请输入用户名', trigger: 'blur'},
-                    ],
-                    password: [
-                        {required: true, message: '请输入密码', trigger: 'blur'},
-                    ]
+                rules2: {
+                    username: [{
+                        required: true,
+                        message: '请输入用户名',
+                        trigger: 'blur'
+                    }],
+                    password: [{
+                        required: true,
+                        message: '请输入密码',
+                        trigger: 'blur'
+                    }]
                 },
                 checked: true
-            }
+            };
         },
         methods: {
-            handleSubmit: function () {
-                console.log(this.$refs.loginForm)
-                this.$refs.loginForm.action="text";
-                this.$refs.loginForm.submit();
+            handleSubmit: function (ev) {
 
+                if (1 == 1 && 2 == 2) {
+                    alert('hj');
+                }
+                var _this = this;
+                this.$refs.loginForm.validate(function (valid) {
+                    if (valid) {
+                        _this.$refs.loginForm.$el.action = "userSer";
+                        _this.$refs.loginForm.$el.submit();
+                    } else {
+                        return false;
+                    }
+                });
             }
         }
 
     })
 </script>
+
 </html>

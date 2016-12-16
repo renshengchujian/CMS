@@ -22,4 +22,10 @@ public class CmsApplication extends WebMvcConfigurerAdapter {
         modelMap.put("name", "jack11");
         return "layout/login";
     }
+
+    @RequestMapping("/userSer")
+    String userSer(ModelMap modelMap) {
+        modelMap.put("name", "jack11");
+        return "user/userSer";
+    }
 }

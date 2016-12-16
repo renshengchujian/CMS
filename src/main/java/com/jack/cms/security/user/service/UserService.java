@@ -22,10 +22,19 @@ public class UserService {
     public List<User> getAll(User user) {
         user.setPageNum(1);
         user.setPageSize(10);
+
+        user.setUserId("124");
+        //user.setUserRelName("23");
+        user.setEmail("15");
+        int k = userMapper.updateByPrimaryKey(user);
+        System.out.println(k);
+        //System.out.println(user1.getEmail());
+        //userMapper.insert(user);
         if (user.getPageNum() != null && user.getPageSize() != null) {
             PageHelper.startPage(user.getPageNum(), user.getPageSize());
         }
-        return userMapper.findUserInfo();
+        return userMapper.selectAll();
+
     }
 
 
