@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
     <meta charset="UTF-8"/>
@@ -83,10 +83,6 @@
         },
         methods: {
             handleSubmit: function (ev) {
-
-                if (1 == 1 && 2 == 2) {
-                    alert('hj');
-                }
                 var _this = this;
                 this.$refs.loginForm.validate(function (valid) {
                     if (valid) {

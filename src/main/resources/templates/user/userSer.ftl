@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8"/>
     <title>用户查询</title>
     <link rel="stylesheet" href="static/css/index.css"/>
+    <link rel="stylesheet" href="static/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="static/css/style.css"/>
 </head>
 <body>
@@ -11,35 +12,32 @@
     <el-row class="panel">
         <el-col :span="24" class="panel-top">
             <el-col :span="20" style="font-size:26px;">
-                <img src="static/image/logo4.png" class="logo"/>
-                <span>C<i style="color:#20a0ff">MS</i></span>
+                <img src="static/image/logo4.png" class="logo"> <span>C<i style="color:#20a0ff">MS</i></span>
             </el-col>
             <el-col :span="4">
-                <el-tooltip class="item tip-logout" effect="dark" content="退出" placement="bottom"
-                            style="padding:0px;">
+                <el-tooltip class="item tip-logout" effect="dark" content="退出" placement="bottom" style="padding:0px;">
                     <i class="fa fa-sign-out" aria-hidden="true" v-on:click="logout"></i>
                 </el-tooltip>
             </el-col>
         </el-col>
         <el-col :span="24" class="panel-center">
             <aside style="width:230px;">
-                <h5 class="admin"><i class="fa fa-user" aria-hidden="true"
-                                     style="margin-right:5px;"></i>欢迎系统管理员：测试</h5>
-                <el-menu style="border-top: 1px solid #475669;" default-active="/table"
-                         class="el-menu-vertical-demo" v-on:open="handleopen"
-                         v-on:close="handleclose" v-on:select="handleselect" theme="dark">
-                    <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-                        <el-submenu :index="index+''" v-if="!item.leaf">
-                            <template slot="title"><i :class="item.iconCls"></i>{{item.name}}
-                            </template>
-                            <el-menu-item v-for="child in item.children" :index="child.path">
-                                {{child.name}}
-                            </el-menu-item>
-                        </el-submenu>
-                        <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path">
-                            <i :class="item.iconCls"></i>{{item.children[0].name}}
-                        </el-menu-item>
-                    </template>
+                <#--<h5 class="admin"><i class="fa fa-user" aria-hidden="true" style="margin-right:5px;"></i>欢迎系统管理员：测试</h5>-->
+                <el-menu style="border-top: 1px solid #475669;" default-active="/table" class="el-menu-vertical-demo" @open="handleopen"
+                         @close="handleclose" @select="handleselect" theme="dark" unique-opened router>
+                    <el-submenu index="1">
+                        <template slot="title"><i class="el-icon-message"></i>导航一</template>
+                        <el-menu-item index="/table">Table</el-menu-item>
+                        <el-menu-item index="/form">Form</el-menu-item>
+                        <el-menu-item index="/page3">页面3</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="2">
+                        <template slot="title"><i class="fa fa-id-card-o"></i>导航二</template>
+                        <el-menu-item index="/page4">选项4</el-menu-item>
+                        <el-menu-item index="/page5">选项5</el-menu-item>
+                    </el-submenu>
+                    <el-menu-item index="/page6"><i class="fa fa-line-chart"></i>导航三</el-menu-item>
+
                 </el-menu>
             </aside>
             <section class="panel-c-c">
@@ -48,11 +46,8 @@
                         <strong style="width:200px;float:left;color: #475669;">{{currentPathName}}</strong>
                         <el-breadcrumb separator="/" style="float:right;">
                             <el-breadcrumb-item :to="{ path: '/table' }">首页</el-breadcrumb-item>
-                            <el-breadcrumb-item v-if="currentPathNameParent!=''">
-                                {{currentPathNameParent}}
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item v-if="currentPathName!=''">{{currentPathName}}
-                            </el-breadcrumb-item>
+                            <el-breadcrumb-item>{{currentPathNameParent}}</el-breadcrumb-item>
+                            <el-breadcrumb-item>{{currentPathName}}</el-breadcrumb-item>
                         </el-breadcrumb>
                     </el-col>
                     <el-col :span="24" style="background-color:#fff;box-sizing: border-box;">
