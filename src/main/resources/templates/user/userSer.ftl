@@ -18,61 +18,38 @@
             <el-col :span="4">
                 <el-tooltip class="item tip-logout" effect="dark" content="退出" placement="bottom"
                             style="padding:0px;">
-                    <i class="fa fa-sign-out" aria-hidden="true" v-on:click="logout"></i>
+                    <i class="fa fa-sign-out" aria-hidden="true" @click="logout"></i>
                 </el-tooltip>
             </el-col>
         </el-col>
         <el-col :span="24" class="panel-center">
             <aside style="width:230px;">
-            <#--<h5 class="admin"><i class="fa fa-user" aria-hidden="true" style="margin-right:5px;"></i>欢迎系统管理员：测试</h5>-->
-                <el-menu style="border-top: 1px solid #475669;" default-active="/table"
-                         class="el-menu-vertical-demo" @open="handleOpen"
-                         @close="handleClose" @select="handleSelect" theme="dark" unique-opened
-                         router>
-                    <el-submenu index="1">
-                        <template slot="title"><i class="el-icon-message"></i>导航一</template>
-                        <el-menu-item index="/table">Table</el-menu-item>
-                        <el-menu-item index="/form">Form</el-menu-item>
-                        <el-menu-item index="/page3">页面3</el-menu-item>
+                <el-menu style="border-top: 1px solid #475669;" class="el-menu-vertical-demo"
+                         @select="handleSelect" theme="dark" unique-opened>
+                    <el-submenu index="1" v-for="menu in menuList">
+                        <template slot="title"><i class="el-icon-message" :class="menu.icon"></i>{{menu.title}}
+                        </template>
+                        <template v-if="menu.childrens&&menu.childrens.length>0">
+                            <el-menu-item :index="menuChild.url"
+                                          v-for="menuChild in menu.childrens">
+                                {{menuChild.title}}
+                            </el-menu-item>
+                        </template>
+                        <el-menu-item index="/">Table</el-menu-item>
+                        <el-menu-item index="/">Form</el-menu-item>
+                        <el-menu-item index="/">页面3</el-menu-item>
                     </el-submenu>
-                    <el-submenu index="2">
-                        <template slot="title"><i class="fa fa-id-card-o"></i>导航二</template>
-                        <el-menu-item index="/page4">选项4</el-menu-item>
-                        <el-menu-item index="/page5">选项5</el-menu-item>
-                    </el-submenu>
-                    <el-menu-item index="/page6"><i class="fa fa-line-chart"></i>导航三</el-menu-item>
-
                 </el-menu>
             </aside>
             <section class="panel-c-c">
-                <template>
-                    <el-tabs type="border-card" :closable="true" class="el-tab-width"
-                             @tab-click="handleClick" @tab-remove="handleRemove">
-                        <template v-for="title in titleList">
-                            <el-tab-pane :label="title">
-                                <iframe class="ui_iframe" name="iframe6" width="100%" height="100%"
-                                        src="userSer.ftl" frameborder="0" data-id="index_v3.html"
-                                        seamless="" style="display: inline;"></iframe>
-                            </el-tab-pane>
-                        </template>
-                    </el-tabs>
-                </template>
-
-            <#--<div class="grid-content bg-purple-light">
-                <el-col :span="24" style="margin-bottom:15px;">
-                    <strong style="width:200px;float:left;color: #475669;">{{currentPathName}}</strong>
-                    <el-breadcrumb separator="/" style="float:right;">
-                        <el-breadcrumb-item :to="{ path: '/table' }">首页</el-breadcrumb-item>
-                        <el-breadcrumb-item>{{currentPathNameParent}}</el-breadcrumb-item>
-                        <el-breadcrumb-item>{{currentPathName}}</el-breadcrumb-item>
-                    </el-breadcrumb>
-                </el-col>
-                <el-col :span="24" style="background-color:#fff;box-sizing: border-box;">
-                    <transition name="fade">
-                        <router-view></router-view>
-                    </transition>
-                </el-col>
-            </div>-->
+                <el-tabs type="border-card" :closable="true" class="el-tab-width"
+                         :active-name="activeName" ref="tab" ref="tabFrame" v-show="tabShow"
+                         @tab-click="handleClick" @tab-remove="handleRemove">
+                    <el-tab-pane :label="tab.title" :name="tab.title" v-for="tab in tabList">
+                        <iframe class="ui_iframe" name="iframe" :src="'./'+tab.url"
+                                frameborder="0"></iframe>
+                    </el-tab-pane>
+                </el-tabs>
             </section>
         </el-col>
     </el-row>
@@ -85,40 +62,99 @@
         el: '#app',
         data: function () {
             return {
-                currentPathName: 'Table',
-                currentPathNameParent: '导航一',
-                titleList: ['用户管理', '配置管理', '角色管理', '定时任务补偿'],
-                form: {
-                    name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
-                }
+                tabList: [
+                    {
+                        title: '用户管理',
+                        url: '/'
+                    }
+                ],
+                tabShow: true,
+                activeName: '用户管理',
+                menuList: [
+                    {
+                        title: '导航一',
+                        icon: 'el-icon-message',
+                        index: '1',
+                        childrens: [
+                            {
+                                title: 'table',
+                                url: '/',
+                                icon: '',
+                                index: '1'
+                            },
+                            {
+                                title: 'form',
+                                url: '/user1',
+                                icon: '',
+                                index: '1'
+                            },
+                            {
+                                title: 'tab',
+                                url: '/user2',
+                                icon: '',
+                                index: '1'
+                            }
+                        ]
+                    }
+                ]
             }
         },
         methods: {
-            handleOpen: function (key, keyPath) {
-                //console.log('handleopen');
-                console.log(key, keyPath);
-            },
-            handleClose: function () {
-                //console.log('handleclose');
-            },
             handleSelect: function (key, keyPath) {
-                console.log(key, keyPath);
+                this.tabShow = false;
+                var menuList = this.menuList;
+                var title = '';
+                for (var i in menuList) {
+                    if (menuList[i].childrens && menuList[i].childrens.length > 0) {
+                        var childMenuList = menuList[i].childrens;
+                        for (var j in childMenuList) {
+                            if (childMenuList[j].url === key) {
+                                title = childMenuList[j].title;
+                                break;
+                            }
+                        }
+                    }
+                }
+                var tabList = this.tabList;
+                var isExistTitle = false;
+                for (var i in tabList) {
+                    if (tabList[i].title === title) {
+                        isExistTitle = true;
+                        break;
+                    }
+                }
+                if (!isExistTitle) {
+                    this.tabList.push({
+                                          title: title,
+                                          url: key
+                                      });
+                }
+                this.activeName = title;
             },
-            handleClick: function (tab, event) {
-                console.log(tab)
+            handleClick: function (tab) {
+                this.activeName = tab.name;
             },
             handleRemove: function (tab) {
-                console.log(tab, event)
+                var index = 0;
+                for (var i in this.tabList) {
+                    if (this.tabList[i].title === tab.name) {
+                        index = i;
+                        break;
+                    }
+                }
+                this.tabList.splice(index, 1);
+                if (this.tabList.length === 0) {
+                    this.tabShow = false;
+                }
             },
             //退出登录
             logout: function () {
+                this.$confirm('确认退出吗?', '提示', {
+                    type: 'warning'
+                }).then(function () {
+                    //_this.$router.replace('/login');
+                }).catch(function () {
+                });
 
             }
         }
