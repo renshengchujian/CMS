@@ -6,6 +6,7 @@ import com.jack.cms.security.user.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,6 +29,24 @@ public class UserController {
     public List<User> getUserInfo(User user) {
         List<User> userList = userService.getAll(user);
         return userList;
+    }
+
+
+    @RequestMapping("/doLogin")
+    String user1(ModelMap modelMap) {
+        return "layout/index";
+    }
+
+    @RequestMapping("/user2")
+    String user2(ModelMap modelMap) {
+        modelMap.put("name", "jack11");
+        return "layout/login";
+    }
+
+    @RequestMapping("/userSer")
+    String userSer(ModelMap modelMap) {
+        modelMap.put("name", "jack11");
+        return "user/userSer";
     }
 }
 

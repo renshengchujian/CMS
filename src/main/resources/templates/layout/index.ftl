@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>用户查询</title>
+    <title>CMS首页</title>
     <link rel="stylesheet" href="static/css/index.css"/>
     <link rel="stylesheet" href="static/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="static/css/style.css"/>
@@ -29,21 +29,16 @@
                     <el-submenu index="1" v-for="menu in menuList">
                         <template slot="title"><i class="el-icon-message" :class="menu.icon"></i>{{menu.title}}
                         </template>
-                        <template v-if="menu.childrens&&menu.childrens.length>0">
-                            <el-menu-item :index="menuChild.url"
-                                          v-for="menuChild in menu.childrens">
-                                {{menuChild.title}}
-                            </el-menu-item>
-                        </template>
-                        <el-menu-item index="/">Table</el-menu-item>
-                        <el-menu-item index="/">Form</el-menu-item>
-                        <el-menu-item index="/">页面3</el-menu-item>
+                        <el-menu-item :index="menuChild.url" v-if="menu.childrens&&menu.childrens.length>0"
+                                      v-for="menuChild in menu.childrens">
+                            {{menuChild.title}}
+                        </el-menu-item>
                     </el-submenu>
                 </el-menu>
             </aside>
             <section class="panel-c-c">
                 <el-tabs type="border-card" :closable="true" class="el-tab-width"
-                         :active-name="activeName" ref="tab" ref="tabFrame" v-show="tabShow"
+                         :active-name="activeName" ref="tabFrame" v-show="tabShow"
                          @tab-click="handleClick" @tab-remove="handleRemove">
                     <el-tab-pane :label="tab.title" :name="tab.title" v-for="tab in tabList">
                         <iframe class="ui_iframe" name="iframe" :src="'./'+tab.url"
@@ -63,12 +58,12 @@
         data: function () {
             return {
                 tabList: [
-                    {
+                    /*{
                         title: '用户管理',
                         url: '/'
-                    }
+                    }*/
                 ],
-                tabShow: true,
+                tabShow: false,
                 activeName: '用户管理',
                 menuList: [
                     {
@@ -101,7 +96,7 @@
         },
         methods: {
             handleSelect: function (key, keyPath) {
-                this.tabShow = false;
+                this.tabShow = true;
                 var menuList = this.menuList;
                 var title = '';
                 for (var i in menuList) {
@@ -131,10 +126,10 @@
                 }
                 this.activeName = title;
             },
-            handleClick: function (tab) {
+            handleClick: function (tab, event) {
                 this.activeName = tab.name;
             },
-            handleRemove: function (tab) {
+            handleRemove: function (tab, event) {
                 var index = 0;
                 for (var i in this.tabList) {
                     if (this.tabList[i].title === tab.name) {
@@ -155,7 +150,6 @@
                     //_this.$router.replace('/login');
                 }).catch(function () {
                 });
-
             }
         }
     })

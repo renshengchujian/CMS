@@ -9,7 +9,6 @@
     <style type="text/css">
         .card-box {
             padding: 20px;
-            /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
             -webkit-border-radius: 5px;
             border-radius: 5px;
             -moz-border-radius: 5px;
@@ -86,7 +85,7 @@
                 var _this = this;
                 this.$refs.loginForm.validate(function (valid) {
                     if (valid) {
-                        _this.$refs.loginForm.$el.action = "userSer";
+                        _this.$refs.loginForm.$el.action = "index";
                         _this.$refs.loginForm.$el.submit();
                     } else {
                         return false;
