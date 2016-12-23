@@ -9,45 +9,51 @@
 </head>
 <body>
 <div id="app">
-    <el-row class="panel">
-        <el-col :span="24" class="panel-top">
-            <el-col :span="20" style="font-size:26px;">
-                <img src="static/image/logo4.png" class="logo"> <span>C<i
-                    style="color:#20a0ff">MS</i></span>
+    <transition name="bounce">
+
+        <el-row class="panel">
+            <el-col :span="24" class="panel-top">
+                <el-col :span="20" style="font-size:26px;">
+                    <img src="static/image/logo4.png" class="logo"> <span>C<i
+                        style="color:#20a0ff">MS</i></span>
+                </el-col>
+                <el-col :span="4">
+                    <el-tooltip class="item tip-logout" effect="dark" content="退出"
+                                placement="bottom"
+                                style="padding:0px;">
+                        <i class="fa fa-sign-out" aria-hidden="true" @click="logout"></i>
+                    </el-tooltip>
+                </el-col>
             </el-col>
-            <el-col :span="4">
-                <el-tooltip class="item tip-logout" effect="dark" content="退出" placement="bottom"
-                            style="padding:0px;">
-                    <i class="fa fa-sign-out" aria-hidden="true" @click="logout"></i>
-                </el-tooltip>
+            <el-col :span="24" class="panel-center">
+                <aside style="width:230px;">
+                    <el-menu style="border-top: 1px solid #475669;" class="el-menu-vertical-demo"
+                             @select="handleSelect" theme="dark" unique-opened>
+                        <el-submenu index="1" v-for="menu in menuList">
+                            <template slot="title"><i class="el-icon-message"
+                                                      :class="menu.icon"></i>{{menu.title}}
+                            </template>
+                            <el-menu-item :index="menuChild.url"
+                                          v-if="menu.childrens&&menu.childrens.length>0"
+                                          v-for="menuChild in menu.childrens">
+                                {{menuChild.title}}
+                            </el-menu-item>
+                        </el-submenu>
+                    </el-menu>
+                </aside>
+                <section class="panel-c-c">
+                    <el-tabs type="border-card" :closable="true" class="el-tab-width"
+                             :active-name="activeName" ref="tabFrame" v-show="tabShow"
+                             @tab-click="handleClick" @tab-remove="handleRemove">
+                        <el-tab-pane :label="tab.title" :name="tab.title" v-for="tab in tabList">
+                            <iframe class="ui_iframe" name="iframe" :src="'./'+tab.url"
+                                    frameborder="0"></iframe>
+                        </el-tab-pane>
+                    </el-tabs>
+                </section>
             </el-col>
-        </el-col>
-        <el-col :span="24" class="panel-center">
-            <aside style="width:230px;">
-                <el-menu style="border-top: 1px solid #475669;" class="el-menu-vertical-demo"
-                         @select="handleSelect" theme="dark" unique-opened>
-                    <el-submenu index="1" v-for="menu in menuList">
-                        <template slot="title"><i class="el-icon-message" :class="menu.icon"></i>{{menu.title}}
-                        </template>
-                        <el-menu-item :index="menuChild.url" v-if="menu.childrens&&menu.childrens.length>0"
-                                      v-for="menuChild in menu.childrens">
-                            {{menuChild.title}}
-                        </el-menu-item>
-                    </el-submenu>
-                </el-menu>
-            </aside>
-            <section class="panel-c-c">
-                <el-tabs type="border-card" :closable="true" class="el-tab-width"
-                         :active-name="activeName" ref="tabFrame" v-show="tabShow"
-                         @tab-click="handleClick" @tab-remove="handleRemove">
-                    <el-tab-pane :label="tab.title" :name="tab.title" v-for="tab in tabList">
-                        <iframe class="ui_iframe" name="iframe" :src="'./'+tab.url"
-                                frameborder="0"></iframe>
-                    </el-tab-pane>
-                </el-tabs>
-            </section>
-        </el-col>
-    </el-row>
+        </el-row>
+    </transition>
 </div>
 </body>
 <script src="static/js/vue.min.js"></script>
@@ -67,24 +73,24 @@
                 activeName: '用户管理',
                 menuList: [
                     {
-                        title: '导航一',
+                        title: '安全管理',
                         icon: 'el-icon-message',
                         index: '1',
                         childrens: [
                             {
-                                title: 'table',
+                                title: '用户',
                                 url: '/',
                                 icon: '',
                                 index: '1'
                             },
                             {
-                                title: 'form',
+                                title: '菜单',
                                 url: '/user1',
                                 icon: '',
                                 index: '1'
                             },
                             {
-                                title: 'tab',
+                                title: '角色',
                                 url: '/user2',
                                 icon: '',
                                 index: '1'

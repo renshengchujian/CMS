@@ -15,11 +15,11 @@ body {
 }
 
 .bounce-enter-active {
-    animation: bounce-in .5s;
+    animation: bounce-in 3.5s;
 }
 
 .bounce-leave-active {
-    animation: bounce-out .2s;
+    animation: bounce-out 3.2s;
 }
 
 @keyframes bounce-in {
