@@ -6,45 +6,15 @@
     <title>CMS 登录</title>
     <link rel="stylesheet" href="static/css/index.css"/>
     <link rel="stylesheet" href="static/css/style.css"/>
+    <link rel="stylesheet" href="static/css/loading-bar.css">
+    <link rel="stylesheet" href="static/css/app.css">
     <style type="text/css">
-        .bounce-enter-active {
-            animation: bounce-in 2.5s;
-        }
-
-        .bounce-leave-active {
-            animation: bounce-out 2.2s;
-        }
-
-        @keyframes bounce-in {
-            0% {
-                transform: scale(0);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes bounce-out {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(0.95);
-            }
-            100% {
-                transform: scale(0);
-            }
-        }
         .card-box {
             padding: 20px;
             -webkit-border-radius: 5px;
             border-radius: 5px;
             -moz-border-radius: 5px;
             background-clip: padding-box;
-            margin-bottom: 20px;
             background-color: #F9FAFC;
             margin: 120px auto;
             width: 400px;
@@ -66,34 +36,42 @@
 
 <body>
 <div id="app">
-    <transition name="bounce">
-        <el-form :model="loginForm" :rules="rules2" ref="loginForm" label-position="left"
-                 label-width="0px" class="demo-ruleForm card-box loginform">
-            <h3 class="title">系统登录</h3>
-            <el-form-item prop="username">
-                <el-input type="text" v-model="loginForm.username" auto-complete="off"
-                          placeholder="账号"></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-                <el-input type="password" v-model="loginForm.password" auto-complete="off"
-                          placeholder="密码"></el-input>
-            </el-form-item>
-            <el-checkbox v-model="checked" checked="checked" style="margin:0px 0px 35px 0px;">记住密码
-            </el-checkbox>
-            <el-form-item style="width:100%;">
-                <el-button type="primary" style="width:100%;" v-on:click="handleSubmit">登录</el-button>
-            </el-form-item>
-        </el-form>
-    </transition>
+    <loading-bar :progress="progress">
+    </loading-bar>
+    <el-form :model="loginForm" :rules="rules2" ref="loginForm" label-position="left"
+             label-width="0px" class="demo-ruleForm card-box loginform" v-if="progress==100">
+        <h3 class="title">系统登录</h3>
+        <el-form-item prop="username">
+            <el-input type="text" v-model="loginForm.username" auto-complete="off"
+                      placeholder="账号"></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+            <el-input type="password" v-model="loginForm.password" auto-complete="off"
+                      placeholder="密码"></el-input>
+        </el-form-item>
+        <el-checkbox v-model="checked" checked="checked" style="margin:0px 0px 35px 0px;">记住密码
+        </el-checkbox>
+        <el-form-item style="width:100%;">
+            <el-button type="primary" style="width:100%;" v-on:click="handleSubmit">登录
+            </el-button>
+        </el-form-item>
+    </el-form>
 </div>
 </body>
 <script src="static/js/vue.min.js"></script>
 <script src="static/js/index.js"></script>
+<script src="static/js/vue2-loading-bar.min.js"></script>
 <script>
     new Vue({
         el: '#app',
+        components: {
+            LoadingBar: LoadingBar
+        },
         data: function () {
             return {
+                progress: 0,
+                error: false,
+                direction: 'right',
                 loginForm: {
                     username: '',
                     password: ''
@@ -113,6 +91,24 @@
                 checked: true
             };
         },
+        mounted: function () {
+            var me = this;
+            me.progress = 10;
+            for (var i = 0; i < 30; i++) {
+                if(i > 20 && i < 29){
+                    setTimeout(function () {
+                        me.progress += 5;
+                    },50*i);
+                }else{
+                    setTimeout(function () {
+                        me.progress ++;
+                    },10*i);
+                }
+            }
+            setTimeout(function () {
+                me.progress = 100;
+            },1500);
+        },
         methods: {
             handleSubmit: function (ev) {
                 var _this = this;
@@ -126,7 +122,6 @@
                 });
             }
         }
-
     })
 </script>
 

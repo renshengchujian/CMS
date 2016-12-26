@@ -153,7 +153,7 @@
                 this.$confirm('确认退出吗?', '提示', {
                     type: 'warning'
                 }).then(function () {
-                    //_this.$router.replace('/login');
+                    window.location.href="./";
                 }).catch(function () {
                 });
             }
