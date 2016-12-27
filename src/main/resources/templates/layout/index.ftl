@@ -9,9 +9,10 @@
 </head>
 <body>
 <div id="app">
+    <loading-bar :progress="progress" :on-progress-done="progressDone"
+                 :on-error-done="errorDone"></loading-bar>
     <transition name="bounce">
-
-        <el-row class="panel">
+        <el-row class="panel" v-if="progress==100">
             <el-col :span="24" class="panel-top">
                 <el-col :span="20" style="font-size:26px;">
                     <img src="static/image/logo4.png" class="logo"> <span>C<i
@@ -58,11 +59,17 @@
 </body>
 <script src="static/js/vue.min.js"></script>
 <script src="static/js/index.js"></script>
+<script src="static/js/vue2-loading-bar.min.js"></script>
 <script>
     new Vue({
         el: '#app',
+        components: {
+            LoadingBar: LoadingBar
+        },
         data: function () {
             return {
+                progress: 0,
+                error: false,
                 tabList: [
                     /*{
                         title: '用户管理',
@@ -100,7 +107,32 @@
                 ]
             }
         },
+        mounted: function () {
+            var me = this;
+            me.progress = 10;
+            for (var i = 0; i < 30; i++) {
+                if (i > 20 && i < 29) {
+                    setTimeout(function () {
+                        me.progress += 5;
+                    }, 50 * i);
+                } else {
+                    setTimeout(function () {
+                        me.progress++;
+                    }, 10 * i);
+                }
+            }
+            setTimeout(function () {
+                me.progress = 100;
+            }, 1500);
+        },
         methods: {
+            // Callback
+            errorDone: function () {
+                this.error = false;
+            },
+            progressDone: function () {
+                this.progress = 100;
+            },
             handleSelect: function (key, keyPath) {
                 this.tabShow = true;
                 var menuList = this.menuList;

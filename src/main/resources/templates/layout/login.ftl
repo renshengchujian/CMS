@@ -71,7 +71,6 @@
             return {
                 progress: 0,
                 error: false,
-                direction: 'right',
                 loginForm: {
                     username: '',
                     password: ''
@@ -98,10 +97,12 @@
                 if (i > 20 && i < 29) {
                     setTimeout(function () {
                         me.progress += 5;
+                        console.log(me.progress)
                     }, 50 * i);
                 } else {
                     setTimeout(function () {
                         me.progress++;
+                        console.log(me.progress)
                     }, 10 * i);
                 }
             }
