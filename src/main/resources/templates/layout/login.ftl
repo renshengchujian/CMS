@@ -6,8 +6,6 @@
     <title>CMS 登录</title>
     <link rel="stylesheet" href="static/css/index.css"/>
     <link rel="stylesheet" href="static/css/style.css"/>
-    <link rel="stylesheet" href="static/css/loading-bar.css">
-    <link rel="stylesheet" href="static/css/app.css">
     <style type="text/css">
         .card-box {
             padding: 20px;
@@ -36,26 +34,28 @@
 
 <body>
 <div id="app">
-    <loading-bar :progress="progress">
-    </loading-bar>
-    <el-form :model="loginForm" :rules="rules2" ref="loginForm" label-position="left"
-             label-width="0px" class="demo-ruleForm card-box loginform" v-if="progress==100">
-        <h3 class="title">系统登录</h3>
-        <el-form-item prop="username">
-            <el-input type="text" v-model="loginForm.username" auto-complete="off"
-                      placeholder="账号"></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-            <el-input type="password" v-model="loginForm.password" auto-complete="off"
-                      placeholder="密码"></el-input>
-        </el-form-item>
-        <el-checkbox v-model="checked" checked="checked" style="margin:0px 0px 35px 0px;">记住密码
-        </el-checkbox>
-        <el-form-item style="width:100%;">
-            <el-button type="primary" style="width:100%;" v-on:click="handleSubmit">登录
-            </el-button>
-        </el-form-item>
-    </el-form>
+    <loading-bar :progress="progress" :on-progress-done="progressDone"
+                 :on-error-done="errorDone"></loading-bar>
+    <transition name="bounce">
+        <el-form :model="loginForm" :rules="rules2" ref="loginForm" label-position="left"
+                 label-width="0px" class="demo-ruleForm card-box loginform" v-if="progress==100">
+            <h3 class="title">系统登录</h3>
+            <el-form-item prop="username">
+                <el-input type="text" v-model="loginForm.username" auto-complete="off"
+                          placeholder="账号"></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+                <el-input type="password" v-model="loginForm.password" auto-complete="off"
+                          placeholder="密码"></el-input>
+            </el-form-item>
+            <el-checkbox v-model="checked" checked="checked" style="margin:0px 0px 35px 0px;">记住密码
+            </el-checkbox>
+            <el-form-item style="width:100%;">
+                <el-button type="primary" style="width:100%;" v-on:click="handleSubmit">登录
+                </el-button>
+            </el-form-item>
+        </el-form>
+    </transition>
 </div>
 </body>
 <script src="static/js/vue.min.js"></script>
@@ -95,21 +95,28 @@
             var me = this;
             me.progress = 10;
             for (var i = 0; i < 30; i++) {
-                if(i > 20 && i < 29){
+                if (i > 20 && i < 29) {
                     setTimeout(function () {
                         me.progress += 5;
-                    },50*i);
-                }else{
+                    }, 50 * i);
+                } else {
                     setTimeout(function () {
-                        me.progress ++;
-                    },10*i);
+                        me.progress++;
+                    }, 10 * i);
                 }
             }
             setTimeout(function () {
                 me.progress = 100;
-            },1500);
+            }, 1500);
         },
         methods: {
+            // Callback
+            errorDone: function () {
+                this.error = false;
+            },
+            progressDone: function () {
+                this.progress = 100;
+            },
             handleSubmit: function (ev) {
                 var _this = this;
                 this.$refs.loginForm.validate(function (valid) {
