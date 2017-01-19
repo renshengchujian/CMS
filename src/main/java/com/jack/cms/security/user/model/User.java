@@ -3,16 +3,21 @@ package com.jack.cms.security.user.model;
 import com.jack.common.bean.FwBean;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author: Jack
  * @date: 2016/11/23
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class User extends FwBean{
 
     /** 用户编号 * */
     private String userId;
+
+    /** 用户名 * */
+    private String userName;
 
     /** 真实姓名 * */
     private String userRelName;

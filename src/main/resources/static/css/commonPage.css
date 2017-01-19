@@ -1,0 +1,52 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background: #FFFFFF;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+}
+
+#servicePage {
+    background: #ffffff;
+    min-height: 530px;
+    height: 100%;
+}
+
+.toolbar {
+    background: #fff;
+    padding: 6px 10px 6px 0;
+}
+
+.pagination {
+    padding: 6px 10px 6px 0;
+    float: right;
+}
+
+.loading-bubbles {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.loading-div {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: table;
+    width: 100%;
+    min-height: 100vh;
+    text-align: center;
+    background: #EFF2F7;
+    z-index: 101;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    height: 100px;
+    transition: height 1.5s
+}
+
+.fade-enter,
+.fade-leave-active {
+    height: 0px;
+}

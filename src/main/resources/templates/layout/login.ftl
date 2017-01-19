@@ -37,7 +37,7 @@
     <loading-bar :progress="progress" :on-progress-done="progressDone"
                  :on-error-done="errorDone"></loading-bar>
     <transition name="bounce">
-        <el-form :model="loginForm" :rules="rules2" ref="loginForm" label-position="left"
+        <el-form :model="loginForm" method="post" :rules="rules2" ref="loginForm" label-position="left"
                  label-width="0px" class="demo-ruleForm card-box loginform" v-if="progress==100">
             <h3 class="title">系统登录</h3>
             <el-form-item prop="username">
@@ -97,12 +97,10 @@
                 if (i > 20 && i < 29) {
                     setTimeout(function () {
                         me.progress += 5;
-                        console.log(me.progress)
                     }, 50 * i);
                 } else {
                     setTimeout(function () {
                         me.progress++;
-                        console.log(me.progress)
                     }, 10 * i);
                 }
             }

@@ -17,9 +17,14 @@ public class CmsApplication extends WebMvcConfigurerAdapter {
         SpringApplication.run(CmsApplication.class, args);
     }
 
-    @RequestMapping(value = { "/", "/login" })
-    String home(ModelMap modelMap) {
+    @RequestMapping(value = {"/", "/login"})
+    String login(ModelMap modelMap) {
         return "layout/login";
+    }
+
+    @RequestMapping(value = {"/doLogin"})
+    String doLogin(ModelMap modelMap) {
+        return "layout/index";
     }
 
 }
