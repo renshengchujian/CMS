@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
         <mapper.version>3.3.6</mapper.version>
-        <pagehelper.version>4.1.1</pagehelper.version>
+        <pagehelper.version>5.1.5</pagehelper.version>
 	</properties>
 
 	<dependencies>
